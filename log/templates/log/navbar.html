@@ -1,0 +1,41 @@
+<!-- Navbar begin //-->
+<nav class="navbar navbar-expand-sm navbar-light bg-light mb-4 shadow-sm">
+  <!-- 網站標誌 -->
+  <div class="navbar-brand">
+    <i class="fas fa-wrench"></i> 線上報修系統
+  </div>
+  <!-- 在小螢幕的設備上顯示可展開/收合導覽選單的按鈕 -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- 導覽列選單內容(可收合) -->
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto nav-pills">
+      <li class="nav-item">
+        <a href="{% url 'log_list' %}" class="nav-link">
+          <i class="fas fa-list-alt"></i> 報修記錄
+        </a>
+      </li>            
+      <li class="nav-item">
+        <a href="{% url 'log_create' %}" class="nav-link">
+          <i class="fas fa-edit"></i> 我要報修
+        </a>
+      </li>
+       {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link">
+            <i class="fas fa-sign-out-alt"></i> 登出 
+            {{ user.username }}
+          </a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a href="{% url 'login' %}" class="nav-link">
+            <i class="fas fa-sign-in-alt"></i> 登入
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+<!-- Navbar end //-->

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th>報修時間</th>
+      <th>報修主旨</th>
+      <th>報修人</th>
+      <th>狀態</th>
+      <th>更新時間<th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in logitem_list %}
+    <tr>
+      <td>{{ item.ctime }}</td>
+      <td>
+        <a href="{{ item.id }}">{{ item.subject }}</a>
+      </td>
+      <td>{{ item.reporter }}</td>
+      <td>{{ item.get_status_display }}</td>
+      <td>{{ logitem.utime }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

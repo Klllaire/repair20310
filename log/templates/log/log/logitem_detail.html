@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="h3">{{ logitem.subject }}</div>
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      {{ logitem.description|linebreaks }}
+    </div>
+  </div>
+  <div class="card-footer card-text d-flex justify-content-between text-muted">
+    <small title="報修人"><i class="fas fa-user"></i> {{ logitem.reporter }} <i class="fas fa-phone"></i> {{ logitem.phone }}</small>
+    <small><i class="far fa-clock"></i> {{ logitem.ctime }}</small>
+  </div>
+</div>
+<hr>
+<div class="card mt-3">
+  {% if form %}
+  <form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="card-header d-flex justify-content-between">
+    <div class="h3">處理狀況說明</div>
+    <div>{{ form.status }}</div>
+  </div>
+  <div class="card-body">{{ form.comment }}</div>
+  <div class="card-footer card-text d-flex justify-content-between text-muted">
+    <small title="處理人員"><i class="fas fa-user-md"></i> {{ form.handler }}</small>
+    <input type="submit" value="送出" class="btn btn-sm btn-primary">
+    <small><i class="far fa-clock"></i> {{ logitem.utime }}</small>
+  </div>
+  </form>
+  {% else %}
+  <div class="card-header d-flex justify-content-between">
+    <div class="h3">處理狀況說明</div>
+    <div>
+      <span class="badge badge-{{ logitem.get_status_class }}">
+      {{ logitem.get_status_display }}
+      </span>
+    </div>
+  </div>
+  <div class="card-body">{{ logitem.comment|linebreaks }}</div>
+  <div class="card-footer card-text d-flex justify-content-between text-muted">
+    <small title="處理人員"><i class="fas fa-user-md"></i> {{ logitem.handler }}</small>
+     {% if user.is_authenticated %}
+    <a href="{% url 'log_reply' logitem.id %}" class="btn btn-sm btn-primary">回覆</a>
+    {% endif %}
+    <small><i class="far fa-clock"></i> {{ logitem.utime }}</small>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
